@@ -64,7 +64,10 @@ export default function App() {
           </Text>
 
           <Text style={styles.price}>
-            R$ 1.099,00
+            10x R$109,9
+          </Text>
+          <Text style={[styles.price, { fontSize: 14}]}>
+            á vista R$1099,00
           </Text>
 
           {/* BOTÃO */}
