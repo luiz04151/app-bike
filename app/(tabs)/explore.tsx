@@ -1,100 +1,190 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, StatusBar } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  StatusBar,
+  Alert,
+  ScrollView,
+} from 'react-native';
+
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function App() {
+
+  function handleCart() {
+
+    Alert.alert(
+      'Carrinho',
+      'Produto adicionado ao carrinho!'
+    );
+  }
+
   return (
-    <View style={styles.container}>
+
+    <LinearGradient
+      colors={['#000000', '#000000', '#0A0F8F', '#0A0F8F']}
+      locations={[0, 0.48, 0.48, 1]}
+      start={{ x: 0.25, y: 0 }}
+      end={{ x: 0.75, y: 1 }}
+      style={styles.container}
+    >
+
       <StatusBar barStyle="light-content" />
 
-      {/* Título */}
-      <Text style={styles.title}>Bicicleta Houston</Text>
+      <ScrollView
+        contentContainerStyle={styles.scroll}
+        showsVerticalScrollIndicator={false}
+      >
 
-      {/* Card */}
-      <View style={styles.card}>
-        <Image
-          source={{ uri: 'https://www.armazemparaiba.com.br/ccstore/v1/images/?source=/file/v3797488419836085187/products/010018198183.f5c0789c408120430654c16dc1f3528e6.jpeg&height=300&width=300' }}
-          style={styles.image}
-        />
-
-        <Text style={styles.bikeName}>Bicicleta Aro 29 Houston Discovery Tamanho 18 com 21 Marchas - Vermelho Pimenta</Text>
-        <Text style={styles.description}>
-          A bicicleta Houston Discovery com aro 29, tamanho 18, e 21 marchas é uma excelente escolha para ciclistas que buscam desempenho e estilo. 
+        {/* TÍTULO */}
+        <Text style={styles.title}>
+          Bicicleta Houston
         </Text>
 
-        <Text style={styles.price}>por: R$ 1.099,00</Text>
+        {/* CARD */}
+        <View style={styles.card}>
 
-        {/* Botão */}
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Adicionar ao carrinho</Text>
-        </TouchableOpacity>
-      </View>
+          <Image
+            source={require('./assets/bike.png')}
+            style={styles.image}
+          />
 
-    </View>
+          <Text style={styles.bikeName}>
+            Bicicleta Aro 29 Houston Discovery
+          </Text>
+
+          <Text style={styles.description}>
+            A bicicleta Houston Discovery com aro 29,
+            tamanho 18 e 21 marchas é uma excelente
+            escolha para ciclistas que buscam
+            desempenho, conforto e estilo para
+            aventuras urbanas e trilhas leves.
+          </Text>
+
+          <Text style={styles.price}>
+            R$ 1.099,00
+          </Text>
+
+          {/* BOTÃO */}
+          <TouchableOpacity
+            style={styles.button}
+            activeOpacity={0.8}
+            onPress={handleCart}
+          >
+            <Text style={styles.buttonText}>
+              Adicionar ao carrinho
+            </Text>
+          </TouchableOpacity>
+
+        </View>
+
+      </ScrollView>
+
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
-    backgroundColor: '#0f172a',
+  },
+
+  scroll: {
+    flexGrow: 1,
     paddingTop: 60,
     paddingHorizontal: 20,
+    paddingBottom: 30,
+    alignItems: 'center',
   },
 
   title: {
-    color: '#fff',
-    fontSize: 28,
+    color: '#FFF',
+    fontSize: 32,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 25,
+    alignSelf: 'flex-start',
   },
 
   card: {
-    backgroundColor: '#1e293b',
-    borderRadius: 20,
-    padding: 20,
+    width: '100%',
+    maxWidth: 420,
+
+    backgroundColor: '#111827',
+
+    borderRadius: 24,
+    padding: 22,
 
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.4,
-    shadowRadius: 20,
+
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+
+    shadowOpacity: 0.35,
+    shadowRadius: 15,
+
     elevation: 10,
   },
 
   image: {
     width: '100%',
-    height: 180,
+    height: 240,
     resizeMode: 'contain',
   },
 
   bikeName: {
-    color: '#fff',
-    fontSize: 18,
+    color: '#FFF',
+    fontSize: 24,
     fontWeight: 'bold',
-    marginTop: 10,
+    marginTop: 18,
   },
 
   description: {
-    color: '#94a3b8',
-    marginTop: 5,
+    color: '#94A3B8',
+    marginTop: 12,
+    fontSize: 15,
+    lineHeight: 24,
   },
 
   price: {
-    color: '#3b82f6',
-    fontSize: 18,
-    marginTop: 10,
+    color: '#3B82F6',
+    fontSize: 28,
+    marginTop: 20,
     fontWeight: 'bold',
   },
 
   button: {
-    backgroundColor: '#3b82f6',
-    marginTop: 15,
-    padding: 15,
-    borderRadius: 12,
+    backgroundColor: '#2563EB',
+
+    marginTop: 24,
+
+    paddingVertical: 16,
+
+    borderRadius: 14,
+
     alignItems: 'center',
+
+    shadowColor: '#2563EB',
+
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+
+    shadowOpacity: 0.4,
+    shadowRadius: 10,
+
+    elevation: 6,
   },
 
   buttonText: {
-    color: '#fff',
+    color: '#FFF',
+    fontSize: 16,
     fontWeight: 'bold',
   },
+
 });
