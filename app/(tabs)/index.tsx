@@ -1,29 +1,29 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, Modal } from 'react-native';
-import { ModalPassword } from '@/components/modal';
-import { LinearGradient } from 'expo-linear-gradient';
 
-let charset = "abcdfghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+import {
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Modal,
+  Text,
+} from 'react-native';
+
+import { LinearGradient } from 'expo-linear-gradient';
+import { ModalPassword } from '@/components/modal';
 
 export default function App() {
 
-  const [size] = useState(350);
-  const [passwordValue, setPasswordValue] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
 
-  function generatePassword(){
-    let password = "";
-
-    for(let i = 0, n = charset.length; i < size; i++){
-      password += charset.charAt(Math.floor(Math.random() * n));
-    }
-
-    setPasswordValue(password);
+  function openLogin() {
     setModalVisible(true);
   }
 
+  function closeLogin() {
+    setModalVisible(false);
+  }
+
   return (
-    
 
     <LinearGradient
       colors={['#000000', '#000000', '#000C7B', '#000C7B']}
@@ -34,19 +34,27 @@ export default function App() {
     >
 
       <Image
-
-        source={require("./assets/bike.png" )}
-        style={[styles.logo, {width: size, height: size}]}
+        source={require('./assets/bike.png')}
+        style={styles.logo}
       />
 
-      <TouchableOpacity style={styles.button} onPress={generatePassword}>
-        <Text style={styles.buttonText}>Bem-Vindo</Text>
+      <TouchableOpacity
+        style={styles.button}
+        activeOpacity={0.8}
+        onPress={openLogin}
+      >
+        <Text style={styles.buttonText}>
+          Bem-Vindo
+        </Text>
       </TouchableOpacity>
 
-      <Modal visible={modalVisible} animationType="fade" transparent={true}>
-        <ModalPassword 
-          password={passwordValue} 
-          handleClose={() => setModalVisible(false)} 
+      <Modal
+        visible={modalVisible}
+        animationType="fade"
+        transparent={true}
+      >
+        <ModalPassword
+          handleClose={closeLogin}
         />
       </Modal>
 
@@ -55,6 +63,7 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -62,24 +71,38 @@ const styles = StyleSheet.create({
   },
 
   logo: {
-    marginBottom: 60,
-    width: 150,
-    height: 150,
-    resizeMode: 'contain'
+    width: 280,
+    height: 280,
+    resizeMode: 'contain',
+    marginBottom: 40,
   },
 
-  button:{
-    backgroundColor: "#392de9",
-    width: "80%",
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-    borderRadius: 8,
-    marginBottom: 18
+  button: {
+    backgroundColor: '#2563EB',
+    width: '50%',
+    height: 55,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 12,
+    elevation: 6,
+    shadowColor: '#2563EB',
+
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+
+    shadowOpacity: 0.4,
+    shadowRadius: 10,
+
+    
+    
   },
 
-  buttonText:{
-    color: "#FFF",
+  buttonText: {
+    color: '#FFF',
     fontSize: 20,
-  }
+    fontWeight: 'bold',
+  },
+
 });
