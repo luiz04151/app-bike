@@ -1,94 +1,214 @@
-import { View, Text, StyleSheet, TouchableOpacity, Pressable } from "react-native";
-import * as Clipboard from 'expo-clipboard'
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+  Platform,
+} from "react-native";
 
-export function ModalPassword({ password, handleClose }){
+import { useState } from "react";
 
-    async function handleCopyPassword(){
-        await Clipboard.setStringAsync(password)
-        alert("Senha salva com sucesso!")
+export function ModalPassword({ handleClose }) {
 
-        handleClose();
+  const [login, setLogin] = useState("");
+  const [senha, setSenha] = useState("");
+
+  function mostrarAlerta(titulo, mensagem) {
+
+    // WEB
+    if (Platform.OS === "web") {
+      window.alert(`${titulo}\n\n${mensagem}`);
+      return;
     }
 
-    return(
-        <View style={styles.container}>
-            <View style={styles.content}>
-                <Text style={styles.title}>Senha gerada</Text>
+    // MOBILE
+    Alert.alert(titulo, mensagem);
+  }
 
-                <Pressable style={styles.innerPassword} onLongPress={handleCopyPassword}>
-                    <Text style={styles.text}>
-                        {password}
-                    </Text>
-                </Pressable>
+  function handleLogin() {
 
-                <View style={styles.buttonArea}>
-                    <TouchableOpacity style={styles.button} onPress={handleClose}>
-                        <Text style={styles.buttonText}>Voltar</Text>
-                    </TouchableOpacity>
+    const usuarioCorreto = "admin";
+    const senhaCorreta = "1234";
 
-                    <TouchableOpacity style={[styles.button, styles.buttonSave]}>
-                        <Text style={styles.buttonSaveText}>Salvar senha</Text>
-                    </TouchableOpacity>
+    // CAMPOS VAZIOS
+    if (
+      login.trim() === "" ||
+      senha.trim() === ""
+    ) {
 
-                </View>
+      mostrarAlerta(
+        "Atenção",
+        "Preencha todos os campos!"
+      );
 
-            </View>
+      return;
+    }
+
+    // LOGIN
+    if (
+      login.trim().toLowerCase() === usuarioCorreto &&
+      senha.trim() === senhaCorreta
+    ) {
+
+      mostrarAlerta(
+        "Login realizado",
+        "Bem-vindo a nossa loja"
+      );
+
+      // LIMPA CAMPOS
+      setLogin("");
+      setSenha("");
+
+      // FECHA MODAL
+      handleClose();
+
+    } else {
+
+      mostrarAlerta(
+        "Erro",
+        "Login ou senha incorretos!"
+      );
+    }
+  }
+
+  return (
+
+    <View style={styles.container}>
+
+      <View style={styles.content}>
+
+        <Text style={styles.title}>
+          Fazer Login
+        </Text>
+
+        <TextInput
+          style={styles.input}
+          placeholder="Digite seu login"
+          placeholderTextColor="#999"
+          value={login}
+          onChangeText={setLogin}
+          autoCapitalize="none"
+        />
+
+        <TextInput
+          style={styles.input}
+          placeholder="Digite sua senha"
+          placeholderTextColor="#999"
+          secureTextEntry={true}
+          value={senha}
+          onChangeText={setSenha}
+        />
+
+        <View style={styles.buttonArea}>
+
+          <TouchableOpacity
+            style={styles.buttonCancel}
+            onPress={handleClose}
+          >
+
+            <Text style={styles.buttonCancelText}>
+              Voltar
+            </Text>
+
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.buttonLogin}
+            onPress={handleLogin}
+          >
+
+            <Text style={styles.buttonLoginText}>
+              Entrar
+            </Text>
+
+          </TouchableOpacity>
+
         </View>
-    )
+
+      </View>
+
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container:{
-        backgroundColor: "rgba(24, 24, 24, 0.6)",
-        flex:1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    content:{
-        backgroundColor: '#FFF',
-        width: "85%",
-        padding: 24,
-        paddingBottom: 24,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 8,
-    },
-    title:{
-      fontSize: 20,
-      fontWeight: "bold",
-      color: "#000",
-      marginBottom: 24,
-    },
-    innerPassword:{
-        backgroundColor: "#0e0e0e",
-        width: '90%',
-        padding: 14,
-        borderRadius: 8,
-    },
-    text:{
-        color: "#FFF",
-        textAlign: "center"
-    },
-    buttonArea:{
-        flexDirection: "row",
-        width: '98%',
-        marginTop: 8,
-        alignItems: "center",
-        justifyContent: "space-between"
-    },
-    button:{
-        flex: 1,
-        alignItems: 'center',
-        marginTop: 14,
-        marginBottom: 14,
-        padding: 8,
-    },
-    buttonSave:{
-        backgroundColor: "#392DE9",
-        borderRadius: 8,
-    },
-    buttonSaveText:{
-        color: "#FFF",
-        fontWeight: 'bold'
-    }
-})
+
+  container: {
+    width: "100%",
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.6)",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+  },
+
+  content: {
+    width: "90%",
+    maxWidth: 400,
+    backgroundColor: "#FFF",
+    borderRadius: 16,
+    padding: 24,
+    alignItems: "center",
+  },
+
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#000",
+    marginBottom: 25,
+  },
+
+  input: {
+    width: "100%",
+    height: 55,
+    backgroundColor: "#F8F8F8",
+    borderWidth: 1,
+    borderColor: "#DDD",
+    borderRadius: 12,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    fontSize: 16,
+  },
+
+  buttonArea: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+
+  buttonCancel: {
+    flex: 1,
+    height: 50,
+    backgroundColor: "#E5E5E5",
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 8,
+  },
+
+  buttonLogin: {
+    flex: 1,
+    height: 50,
+    backgroundColor: "#392DE9",
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 8,
+  },
+
+  buttonCancelText: {
+    color: "#000",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+
+  buttonLoginText: {
+    color: "#FFF",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+
+});
