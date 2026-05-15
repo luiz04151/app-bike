@@ -11,6 +11,10 @@ import {
 
 import { LinearGradient } from 'expo-linear-gradient';
 
+import { router } from 'expo-router';
+
+
+
 export default function App() {
 
   function handleCart() {
@@ -44,7 +48,10 @@ export default function App() {
         </Text>
 
         {/* CARD */}
+        <View style={styles.cardsContainer}>
         <View style={styles.card}>
+
+        
 
           <Image
             source={require('./assets/bike.png')}
@@ -74,13 +81,51 @@ export default function App() {
           <TouchableOpacity
             style={styles.button}
             activeOpacity={0.8}
-            onPress={handleCart}
+            onPress={() => router.push('/carrinho')}
           >
             <Text style={styles.buttonText}>
               Adicionar ao carrinho
             </Text>
           </TouchableOpacity>
 
+          
+
+        </View>
+
+        <View style={styles.card}>
+
+          <Image
+            source={require('./assets/bike2.png')}
+            style={styles.image}
+          />
+
+          <Text style={styles.bikeName}>
+            Bicicleta Aro 29 Houston Discovery - Cinza Metálico
+          </Text>
+
+          <Text style={styles.description}>
+           A bicicleta Houston Discovery com aro 29, tamanho 18 e 21 marchas é uma escolha excelente para ciclistas que buscam desempenho e estilo.
+          </Text>
+
+          <Text style={styles.price}>
+            10x R$109,90
+          </Text>
+          <Text style={[styles.price, { fontSize: 14}]}>
+            á vista R$1099,00
+          </Text>
+
+          {/* BOTÃO */}
+          <TouchableOpacity
+            style={styles.button}
+            activeOpacity={0.8}
+            onPress={() => router.push('/carrinho')}
+          >
+            <Text style={styles.buttonText}>
+              Adicionar ao carrinho
+            </Text>
+          </TouchableOpacity>
+
+        </View>
         </View>
 
       </ScrollView>
@@ -111,25 +156,23 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
 
-  card: {
+  cardsContainer: {
+    flexDirection: 'row',
+    gap: 12,
     width: '100%',
-    maxWidth: 420,
+  },
 
+
+  card: {
+    flex: 1,
     backgroundColor: '#111827',
-
-    borderRadius: 24,
-    padding: 22,
-
+    borderRadius: 20,
+    padding: 15,
+    justifyContent: 'space-between',
     shadowColor: '#000',
-
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-
+    shadowOffset: {width: 0, height: 10},
     shadowOpacity: 0.35,
     shadowRadius: 15,
-
     elevation: 10,
   },
 
