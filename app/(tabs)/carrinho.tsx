@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { router } from 'expo-router';
 
 export default function CartScreen() {
   return (
@@ -26,7 +27,7 @@ export default function CartScreen() {
 
           <View style={styles.info}>
             <Text style={styles.bikeName}>Bicicleta Aro 29 Houston Discovery - Cinza Metálico</Text>
-            <Text style={styles.price}>$1,999.99</Text>
+            <Text style={styles.price}>$1099,00 ( à vista)</Text>
           </View>
         </View>
 
@@ -38,28 +39,33 @@ export default function CartScreen() {
 
           <View style={styles.info}>
             <Text style={styles.bikeName}>Bicicleta Aro 29 Houston Discovery</Text>
-            <Text style={styles.price}>R$ 1099,00</Text>
+            <Text style={styles.price}>R$ 1099,00 ( à vista)</Text>
           </View>
         </View>
 
         <View style={styles.summary}>
           <Text style={styles.summaryText}>Preço</Text>
-          <Text style={styles.summaryValue}>R$ 2,119.99</Text>
+          <Text style={styles.summaryValue}>R$ 2198,00</Text>
         </View>
 
         <View style={styles.summary}>
           <Text style={styles.summaryText}>Entrega</Text>
-          <Text style={styles.summaryValue}>R$ 20.00</Text>
+          <Text style={styles.summaryValue}>R$ 20,00</Text>
         </View>
 
         <View style={styles.totalContainer}>
           <Text style={styles.totalText}>Total</Text>
-          <Text style={styles.totalPrice}>R$ 2,139.99</Text>
+          <Text style={styles.totalPrice}>R$ 2218,00</Text>
         </View>
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+                style={styles.button}
+                activeOpacity={0.8}
+                onPress={() => router.push('/finalizacao')}
+              >
           <Text style={styles.buttonText}>Comprar</Text>
         </TouchableOpacity>
+
 
       </ScrollView>
     </View>
