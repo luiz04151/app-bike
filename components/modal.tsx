@@ -9,6 +9,7 @@ import {
 } from "react-native";
 
 import { useState } from "react";
+import { router } from 'expo-router';
 
 export function ModalPassword({ handleClose }) {
 
@@ -30,7 +31,7 @@ export function ModalPassword({ handleClose }) {
   function handleLogin() {
 
     const usuarioCorreto = "admin";
-    const senhaCorreta = "1234";
+    const senhaCorreta = "12345";
 
     // CAMPOS VAZIOS
     if (
@@ -52,10 +53,7 @@ export function ModalPassword({ handleClose }) {
       senha.trim() === senhaCorreta
     ) {
 
-      mostrarAlerta(
-        "Login realizado",
-        "Bem-vindo a nossa loja"
-      );
+      
 
       // LIMPA CAMPOS
       setLogin("");
@@ -63,6 +61,7 @@ export function ModalPassword({ handleClose }) {
 
       // FECHA MODAL
       handleClose();
+      router.push('/explore');
 
     } else {
 
